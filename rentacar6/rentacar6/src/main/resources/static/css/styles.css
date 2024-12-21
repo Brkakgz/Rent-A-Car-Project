@@ -97,6 +97,12 @@ header nav a:hover {
     border: 1px solid #ddd;
     border-radius: 5px;
     text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.car-grid div:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .car-grid div h3 {
@@ -215,7 +221,39 @@ p a:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+#admin-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+#admin-content li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 .btn {
     margin-top: 10px;
 }
 
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.message.success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c6cb;
+}
