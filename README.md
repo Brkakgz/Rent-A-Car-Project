@@ -23,8 +23,8 @@
 * *HTML, CSS, JavaScript* 
 # Veritabanı: 
 * *PostgreSQL*  ile veriler güvenli bir şekilde saklanır.
-* *JWT (JSON Web Tokens)* *: Giriş ve yetkilendirme süreçlerinde güvenliği sağlar.
-* *Swagger* :  API dokümantasyonu için entegre edildi.
+###JWT (JSON Web Tokens): Giriş ve yetkilendirme süreçlerinde güvenliği sağlar.
+###Swagger :  API dokümantasyonu için entegre edildi.
 
 ## Öne Çıkan Özellikler
 **Stok ve Görünürlük Yönetimi**: Araç stokları otomatik olarak güncellenir. Görünmez araçlar, stok arttığında tekrar aktif hale gelir.
