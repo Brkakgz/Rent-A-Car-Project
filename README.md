@@ -16,7 +16,7 @@
 **Marka Yönetimi**: Bir markanın silinmesi sırasında, bağlı araçlar varsa işlemin engellenmesi gibi kontroller mevcuttur.
 
 ## Teknolojiler
-### Backend:
+### Backend
 *Java (Spring Boot)*
 *Java8*
 *OOP*
