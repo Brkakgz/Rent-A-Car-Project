@@ -17,19 +17,19 @@
 
 ## Teknolojiler
 ### Backend:
-* *Java (Spring Boot)*
-* *Java8
-* *OOP
-* *Maven*
-* *Java8*
-* *RESTful API mimarisi*
-* *JWT (JSON Web Tokens)*: Giriş ve yetkilendirme süreçlerinde güvenliği sağlar.
-* * Swagger* :  API dokümantasyonu için entegre edildi.
+*Java (Spring Boot)*
+*Java8*
+*OOP*
+*Maven*
+*Java8*
+*RESTful API mimarisi*
+*JWT (JSON Web Tokens)*: Giriş ve yetkilendirme süreçlerinde güvenliği sağlar.
+*Swagger* :  API dokümantasyonu için entegre edildi.
 
 ### Frontend
-* *HTML, CSS, JavaScript* 
-# Veritabanı 
-* *PostgreSQL*  ile veriler güvenli bir şekilde saklanır.
+*HTML, CSS, JavaScript* 
+### Veritabanı 
+*PostgreSQL*  ile veriler güvenli bir şekilde saklanır.
 
 
 ## Öne Çıkan Özellikler
