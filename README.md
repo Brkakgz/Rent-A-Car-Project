@@ -17,14 +17,20 @@
 
 ## Teknolojiler
 ### Backend:
-* *Java (Spring Boot)* 
-* *RESTful API mimarisi* 
-### Frontend:
+* *Java (Spring Boot)*
+* *Java8
+* *OOP
+* *Maven*
+* *Java8*
+* *RESTful API mimarisi*
+* *JWT (JSON Web Tokens)*: Giriş ve yetkilendirme süreçlerinde güvenliği sağlar.
+* * Swagger* :  API dokümantasyonu için entegre edildi.
+
+### Frontend
 * *HTML, CSS, JavaScript* 
-# Veritabanı: 
+# Veritabanı 
 * *PostgreSQL*  ile veriler güvenli bir şekilde saklanır.
-###JWT (JSON Web Tokens): Giriş ve yetkilendirme süreçlerinde güvenliği sağlar.
-###Swagger :  API dokümantasyonu için entegre edildi.
+
 
 ## Öne Çıkan Özellikler
 **Stok ve Görünürlük Yönetimi**: Araç stokları otomatik olarak güncellenir. Görünmez araçlar, stok arttığında tekrar aktif hale gelir.
