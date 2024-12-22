@@ -48,4 +48,5 @@ Araçlar ve kullanıcılar üzerinde tam kontrole sahiptir.
 Araç ekleme, düzenleme ve teslim işlemleri gibi yönetimsel işlemleri gerçekleştirebilir.
 
 
-** * *ReadMe Düzenleme Kaynağm: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax* * **
+
+*ReadMe Düzenleme Kaynağm: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax*
