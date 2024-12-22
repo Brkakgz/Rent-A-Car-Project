@@ -21,7 +21,6 @@
 *Java8*  
 *OOP*  
 *Maven*  
-*Java8*  
 *RESTful API mimarisi*  
 *JWT (JSON Web Tokens)*: Giriş ve yetkilendirme süreçlerinde güvenliği sağlar.  
 *Swagger* :  API dokümantasyonu için entegre edildi.  
