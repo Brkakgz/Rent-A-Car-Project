@@ -1,4 +1,4 @@
-### Rent A Car Projesi
+# Rent A Car Projesi
 
 ## Projenin Amacı
   Bu proje, bir araç kiralama platformu oluşturmak için geliştirildi. Kullanıcılar istedikleri araçları filtreleyerek seçebiliyor, fiyat hesaplaması yapabiliyor ve hızlı bir şekilde kiralama işlemi gerçekleştirebiliyor. Adminler ise araç ve kullanıcı yönetimi gibi işlemleri kolaylıkla gerçekleştirebiliyor.
@@ -16,15 +16,15 @@
 **Marka Yönetimi**: Bir markanın silinmesi sırasında, bağlı araçlar varsa işlemin engellenmesi gibi kontroller mevcuttur.
 
 ## Teknolojiler
-# Backend:**
-* *Java (Spring Boot)* *
-* *RESTful API mimarisi* *
-# Frontend:
-* *HTML, CSS, JavaScript* *
+### Backend:
+* *Java (Spring Boot)* 
+* *RESTful API mimarisi* 
+### Frontend:
+* *HTML, CSS, JavaScript* 
 # Veritabanı: 
-* *PostgreSQL* * ile veriler güvenli bir şekilde saklanır.
+* *PostgreSQL*  ile veriler güvenli bir şekilde saklanır.
 * *JWT (JSON Web Tokens)* *: Giriş ve yetkilendirme süreçlerinde güvenliği sağlar.
-* *Swagger* *:  API dokümantasyonu için entegre edildi.
+* *Swagger* :  API dokümantasyonu için entegre edildi.
 
 ## Öne Çıkan Özellikler
 **Stok ve Görünürlük Yönetimi**: Araç stokları otomatik olarak güncellenir. Görünmez araçlar, stok arttığında tekrar aktif hale gelir.
@@ -34,10 +34,10 @@
 **Kolay Entegrasyon**: Projeyi Docker ile kolayca başlatabilir, modern yazılım geliştirme süreçlerine entegre edebilirsiniz.
 
 ## Nasıl Çalışır?
-# Kullanıcılar İçin
+### Kullanıcılar İçin
 Giriş yaparak araç kiralayabilir, sipariş geçmişini görüntüleyebilir.
 Araçları detaylı bir şekilde inceleyip uygun tarih aralığında kiralama işlemi yapabilir.
-# Adminler İçin
+### Adminler İçin
 Araçlar ve kullanıcılar üzerinde tam kontrole sahiptir.
 Araç ekleme, düzenleme ve teslim işlemleri gibi yönetimsel işlemleri gerçekleştirebilir.
 
