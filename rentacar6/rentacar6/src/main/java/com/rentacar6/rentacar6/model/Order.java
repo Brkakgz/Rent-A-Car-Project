@@ -24,6 +24,9 @@ public class Order {
 
     private double totalPrice;
 
+    @Column(nullable = false)
+    private boolean returned; // Yeni alan: Siparişin teslim edilip edilmediğini takip eder
+
     public Order() {}
 
     public Order(Customer customer, Car car, LocalDate rentDate, LocalDate returnDate, double totalPrice) {
@@ -32,6 +35,7 @@ public class Order {
         this.rentDate = rentDate;
         this.returnDate = returnDate;
         this.totalPrice = totalPrice;
+        this.returned = false; // Yeni siparişler varsayılan olarak teslim edilmemiş olur
     }
 
     // Getters and Setters
@@ -81,5 +85,13 @@ public class Order {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public boolean isReturned() { // Getter for returned
+        return returned;
+    }
+
+    public void setReturned(boolean returned) { // Setter for returned
+        this.returned = returned;
     }
 }

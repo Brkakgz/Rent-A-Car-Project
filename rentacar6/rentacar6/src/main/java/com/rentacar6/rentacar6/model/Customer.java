@@ -1,6 +1,8 @@
 package com.rentacar6.rentacar6.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "customers")
@@ -12,21 +14,32 @@ public class Customer {
 
     private String firstName;
     private String lastName;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
     private String phone;
     private String address;
 
-    private String password; // Kullanıcı şifre alanı
+    @Column(unique = true, nullable = false)
+    @Size(min = 11, max = 11, message = "T.C. Kimlik numarası 11 haneli olmalıdır.")
+    @Pattern(regexp = "^[1-9]\\d{9}[02468]$", message = "T.C. Kimlik numarası çift rakamla bitmelidir.")
+    private String tcNo;
+
+    private String password;
 
     public Customer() {}
 
-    public Customer(String firstName, String lastName, String email, String phone, String address) {
+    public Customer(String firstName, String lastName, String email, String phone, String address, String tcNo, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.address = address;
+        this.tcNo = tcNo;
+        this.password = password;
     }
+
 
     // Getter ve Setter metotları
     public Long getId() {
@@ -75,6 +88,14 @@ public class Customer {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getTcNo() {
+        return tcNo;
+    }
+
+    public void setTcNo(String tcNo) {
+        this.tcNo = tcNo;
     }
 
     public String getPassword() {

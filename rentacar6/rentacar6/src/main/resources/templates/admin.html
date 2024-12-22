@@ -4,29 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Rent A Car</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
-        <h1>Admin Panel</h1>
-    </header>
-    <main>
-        <section id="admin-panel">
-            <h2>Welcome, Admin</h2>
-            <div class="admin-buttons">
-                <button id="view-users-btn" class="btn">View Users</button>
-                <button id="view-rented-cars-btn" class="btn">View Rented Cars</button>
-                <button id="add-car-btn" class="btn">Add New Car</button>
-                <button id="view-all-cars-btn" class="btn">View All Cars</button>
-            </div>
-            <div id="admin-content">
-                <!-- Dinamik içerikler burada görünecek -->
-            </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 Rent A Car</p>
-    </footer>
-    <script src="/js/admin.js"></script>
+<header>
+    <h1>Admin Panel</h1>
+</header>
+<main>
+    <section id="admin-panel">
+        <h2>Welcome, Admin</h2>
+        <div class="admin-buttons">
+            <button id="view-users-btn" class="btn">View Users</button>
+            <button id="view-rented-cars-btn" class="btn">View Rented Cars</button>
+            <button id="add-car-btn" class="btn">Add New Car</button>
+            <button id="view-all-cars-btn" class="btn">View All Cars</button>
+            <button id="filter-orders-btn" class="btn">Filter Orders</button>
+        </div>
+        <div id="admin-content">
+            <!-- Dinamik içerikler burada görünecek -->
+            <h3>Add New Car</h3>
+            <form id="add-car-form" enctype="multipart/form-data">
+                <input type="text" name="brand" placeholder="Brand" required>
+                <input type="text" name="model" placeholder="Model" required>
+                <input type="number" name="year" placeholder="Year" required>
+                <input type="text" name="color" placeholder="Color" required>
+                <input type="number" name="dailyPrice" placeholder="Daily Price" required>
+                <input type="file" name="image" accept="image/*">
+                <button type="submit">Add Car</button>
+            </form>
+        </div>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2024 Rent A Car</p>
+</footer>
+<script src="js/admin.js" type="module"></script>
 </body>
 </html>

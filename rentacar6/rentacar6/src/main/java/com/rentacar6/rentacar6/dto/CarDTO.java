@@ -1,45 +1,15 @@
-package com.rentacar6.rentacar6.model;
+package com.rentacar6.rentacar6.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "cars")
-public class Car {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class CarDTO {
     private String brand;
     private String model;
     private int year;
     private String color;
     private double dailyPrice;
-    private boolean isAvailable;
-    private String imageUrl;
+    private boolean available; // Getter ve Setter gerekiyor
+    private String imageUrl; // Getter ve Setter gerekiyor
 
-    // Default Constructor
-    public Car() {}
-
-    // Parametreli Constructor
-    public Car(String brand, String model, int year, String color, double dailyPrice, boolean isAvailable) {
-        this.brand = brand;
-        this.model = model;
-        this.year = year;
-        this.color = color;
-        this.dailyPrice = dailyPrice;
-        this.isAvailable = isAvailable;
-    }
-
-    // Getter and Setter Metotları
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    // Getters ve Setters
     public String getBrand() {
         return brand;
     }
@@ -81,11 +51,11 @@ public class Car {
     }
 
     public boolean isAvailable() {
-        return isAvailable;
+        return available;
     }
 
-    public void setAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public String getImageUrl() {

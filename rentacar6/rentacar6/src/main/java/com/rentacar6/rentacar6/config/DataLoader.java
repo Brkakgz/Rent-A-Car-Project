@@ -24,13 +24,11 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // Admin Kullanıcı
-        Customer admin = new Customer("Admin", "User", "admin@example.com", "123456789", "123 Admin St");
-        admin.setPassword(passwordEncoder.encode("admin123"));
+        Customer admin = new Customer("Admin", "User", "admin@example.com", "123456789", "123 Admin St", "11111111110", passwordEncoder.encode("admin123"));
         customerRepository.save(admin);
 
         // Kullanıcı
-        Customer user = new Customer("John", "Doe", "user@example.com", "987654321", "456 User St");
-        user.setPassword(passwordEncoder.encode("user123"));
+        Customer user = new Customer("John", "Doe", "user@example.com", "987654321", "456 User St", "22222222220", passwordEncoder.encode("user123"));
         customerRepository.save(user);
 
         // Araçlar

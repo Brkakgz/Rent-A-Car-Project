@@ -1,5 +1,6 @@
 package com.rentacar6.rentacar6.controller;
 
+import com.rentacar6.rentacar6.dto.CarDTO;
 import com.rentacar6.rentacar6.model.Car;
 import com.rentacar6.rentacar6.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,15 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<Car> createCar(@RequestBody Car car) {
-        return ResponseEntity.ok(carService.createCar(car));
+    public ResponseEntity<Car> createCar(@RequestBody CarDTO carDTO) {
+        Car createdCar = carService.createCar(carDTO);
+        return ResponseEntity.ok(createdCar);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Car> updateCar(@PathVariable Long id, @RequestBody Car car) {
-        return ResponseEntity.ok(carService.updateCar(id, car));
+    public ResponseEntity<Car> updateCar(@PathVariable Long id, @RequestBody CarDTO carDTO) {
+        Car updatedCar = carService.updateCar(id, carDTO);
+        return ResponseEntity.ok(updatedCar);
     }
 
     @DeleteMapping("/{id}")
