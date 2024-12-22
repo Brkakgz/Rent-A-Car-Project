@@ -1,9 +1,9 @@
-**### Rent A Car Projesi**
+### Rent A Car Projesi
 
-**## Projenin Amacı**
+## Projenin Amacı
   Bu proje, bir araç kiralama platformu oluşturmak için geliştirildi. Kullanıcılar istedikleri araçları filtreleyerek seçebiliyor, fiyat hesaplaması yapabiliyor ve hızlı bir şekilde kiralama işlemi gerçekleştirebiliyor. Adminler ise araç ve kullanıcı yönetimi gibi işlemleri kolaylıkla gerçekleştirebiliyor.
 
-**## Kullanıcı İşlevleri**
+## Kullanıcı İşlevleri
 **Giriş ve Kayıt**: Kullanıcılar, sisteme kayıt olarak giriş yapabilir. JWT sistemi sayesinde güvenli oturumlar sağlanır.
 **Araç Listeleme**: Araçları markasına, rengine ve günlük fiyatına göre filtreleyebilirsiniz.
 **Araç Kiralama**: Tarih aralığı seçerek, toplam fiyat bilgisiyle birlikte istediğiniz aracı kiralayabilirsiniz. Kiralama sonrası araç stoktan düşer.
@@ -15,8 +15,8 @@
 **Araç Teslim Alma İşlemi**: Kullanıcıdan teslim alınan araçların stoğu otomatik güncellenir. Eğer araç pasif durumda ise, teslim alındıktan sonra tekrar görünür hale gelir.
 **Marka Yönetimi**: Bir markanın silinmesi sırasında, bağlı araçlar varsa işlemin engellenmesi gibi kontroller mevcuttur.
 
-**## Teknolojiler**
-**# Backend:**
+## Teknolojiler
+# Backend:**
 * *Java (Spring Boot)* *
 * *RESTful API mimarisi* *
 # Frontend:
@@ -26,18 +26,18 @@
 * *JWT (JSON Web Tokens)* *: Giriş ve yetkilendirme süreçlerinde güvenliği sağlar.
 * *Swagger* *:  API dokümantasyonu için entegre edildi.
 
-**## Öne Çıkan Özellikler**
+## Öne Çıkan Özellikler
 **Stok ve Görünürlük Yönetimi**: Araç stokları otomatik olarak güncellenir. Görünmez araçlar, stok arttığında tekrar aktif hale gelir.
 **Dinamik Fiyat Hesaplama**: Kullanıcı tarih seçimine göre toplam kiralama maliyetini anında görebilir.
 **Responsive Tasarım**: Tüm sayfalar farklı cihazlarda sorunsuz çalışacak şekilde tasarlanmıştır.
 **Rol Tabanlı Yetkilendirme**: Kullanıcı ve admin rolleri arasında ayrım yapılır. Adminler geniş yetkilere sahiptir.
 **Kolay Entegrasyon**: Projeyi Docker ile kolayca başlatabilir, modern yazılım geliştirme süreçlerine entegre edebilirsiniz.
 
-**## Nasıl Çalışır?**
-**# Kullanıcılar İçin**
+## Nasıl Çalışır?
+# Kullanıcılar İçin
 Giriş yaparak araç kiralayabilir, sipariş geçmişini görüntüleyebilir.
 Araçları detaylı bir şekilde inceleyip uygun tarih aralığında kiralama işlemi yapabilir.
-**# Adminler İçin**
+# Adminler İçin
 Araçlar ve kullanıcılar üzerinde tam kontrole sahiptir.
 Araç ekleme, düzenleme ve teslim işlemleri gibi yönetimsel işlemleri gerçekleştirebilir.
 
