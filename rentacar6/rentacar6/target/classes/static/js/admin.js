@@ -495,7 +495,7 @@ async function loadRentalHistory() {
     const displayArea = document.getElementById("admin-display-area");
 
     try {
-        const history = await apiFetch('/api/admin/history', 'GET');
+        const history = await apiFetch('/api/history/admin', 'GET');
 
         displayArea.innerHTML = `
             <h3>Rental History</h3>

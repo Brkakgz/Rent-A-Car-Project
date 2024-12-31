@@ -44,6 +44,11 @@ public class HistoryService {
     public List<History> getAllHistory() {
         return historyRepository.findAllByOrderByRentDateDesc();
     }
+
+
+    public List<History> getHistoryByCustomerTcNo(String tcNo) {
+        return historyRepository.findByTcNoOrderByRentDateDesc(tcNo);
+    }
 }
 
 

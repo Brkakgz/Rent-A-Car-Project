@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface HistoryRepository extends JpaRepository<History, Long> {
-    List<History> findAllByOrderByRentDateDesc(); // Tarihe göre sıralama
+    List<History> findAllByOrderByRentDateDesc(); // Tarihe göre sıralama admin
+
+    List<History> findByTcNoOrderByRentDateDesc(String tcNo); //TCye göre sip getir kullanıcı.
 }

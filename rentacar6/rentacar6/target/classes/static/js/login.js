@@ -25,14 +25,11 @@ function clearToken() {
 }
 
 // Login Form Submit İşlemi
+// Login Form Submit İşlemi
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("login-form").addEventListener("submit", async function (event) {
-        console.log("Form submit olayı tetiklendi");
         event.preventDefault(); // Varsayılan davranışı engelle
-        console.log("event.preventDefault() çalıştı ve sayfa yenilemesi engellendi.");
-
-        // Giriş yapmadan önce eski token'ı temizle
-        clearToken();
+        clearToken(); // Giriş yapmadan önce eski token'ı temizle
 
         // Kullanıcı giriş bilgilerini al
         const email = document.getElementById("email")?.value.trim(); // Boşlukları temizle
@@ -40,46 +37,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Email veya şifre boşsa kullanıcıyı bilgilendir
         if (!email || !password) {
-            console.warn("Email veya şifre eksik.");
-            showMessage("error", "Email ve şifre gereklidir!");
+            showMessage("error", "Email and password are required!");
             return;
         }
 
         try {
-            console.log("API çağrısı yapılıyor:", { email, password });
             const response = await apiFetch('/api/auth/login', 'POST', { email, password });
 
             // Başarılı giriş işlemi
             if (response?.token && response?.role) {
-                console.log("Giriş başarılı, token alındı:", response.token);
                 localStorage.setItem('authToken', response.token); // Yeni token'ı sakla
 
-                // Rol kontrolü
-                const role = response.role; // Rolü API yanıtından alıyoruz
+                const role = response.role; // Rol kontrolü
                 if (role === 'ADMIN') {
-                    showMessage("success", "Admin girişi başarılı! Admin paneline yönlendiriliyorsunuz...");
+                    showMessage("success", "Admin login successful! Redirecting to admin panel...");
                     setTimeout(() => {
-                        window.location.href = "/admin.html"; // Admin paneline yönlendirme
+                        window.location.href = "/admin.html";
                     }, 1000);
                 } else if (role === 'USER') {
-                    showMessage("success", "Giriş başarılı! Ana sayfaya yönlendiriliyorsunuz...");
+                    showMessage("success", "Login successful! Redirecting to homepage...");
                     setTimeout(() => {
-                        window.location.href = "/index.html"; // Ana sayfaya yönlendirme
+                        window.location.href = "/index.html";
                     }, 1000);
                 } else {
-                    showMessage("error", "Bilinmeyen bir rol. Destek ile iletişime geçin.");
+                    showMessage("error", "Unknown role. Please contact support.");
                 }
             } else {
-                console.error("Sunucu beklenen formatta yanıt dönmedi:", response);
-                showMessage("error", "Giriş işlemi başarısız! Sunucu hatası.");
+                console.error("Unexpected server response format:", response);
+                showMessage("error", "Login failed! Please try again.");
             }
         } catch (error) {
-            // Hata detayını konsola ve ekrana yazdır
-            console.error("Hata detayı:", error.message || error.response);
-            showMessage("error", error.message || "Email veya şifre hatalı.");
+            console.error("Error details:", error.message || error.response);
+            showMessage("error", "Incorrect email or password.");
         }
     });
 });
+
 
 // Oturumu Kapatma (Logout) İşlevi
 document.getElementById("logout-button")?.addEventListener("click", () => {

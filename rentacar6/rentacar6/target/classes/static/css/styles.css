@@ -100,11 +100,12 @@ header nav a:hover {
 /* Cars Grid Adjustments */
 .car-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(4, 350px);
     gap: 20px;
     margin: 20px auto; /* Ortalanması için */
     padding-left: 150px; /* Filtre ile çakışmaması için sol boşluk ekle */
     max-width: 1200px; /* Responsive sınır koy */
+    justify-content: center;
 }
 
 .car-grid div {

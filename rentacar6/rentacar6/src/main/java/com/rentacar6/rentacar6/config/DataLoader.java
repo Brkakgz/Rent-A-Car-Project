@@ -6,11 +6,10 @@ import com.rentacar6.rentacar6.enums.LocationType;
 import com.rentacar6.rentacar6.model.Admin;
 import com.rentacar6.rentacar6.model.Car;
 import com.rentacar6.rentacar6.model.Customer;
-import com.rentacar6.rentacar6.model.Order;
 import com.rentacar6.rentacar6.repository.AdminRepository;
 import com.rentacar6.rentacar6.repository.CarRepository;
 import com.rentacar6.rentacar6.repository.CustomerRepository;
-import com.rentacar6.rentacar6.repository.OrderRepository;
+import com.rentacar6.rentacar6.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,7 +32,7 @@ public class DataLoader implements CommandLineRunner {
     private CarRepository carRepository;
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderService orderService; // OrderService kullanımı
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -78,28 +77,24 @@ public class DataLoader implements CommandLineRunner {
         carRepository.save(car2);
         carRepository.save(car3);
 
-        // Add orders
-        Order returnedOrder = new Order();
-        returnedOrder.setCustomer(customer);
-        returnedOrder.setCar(car1);
-        returnedOrder.setRentDate(LocalDate.of(2024, 1, 1));
-        returnedOrder.setReturnDate(LocalDate.of(2024, 1, 10));
-        returnedOrder.setPickupLocation(LocationType.ISTANBUL);
-        returnedOrder.setDropoffLocation(LocationType.ANKARA);
-        returnedOrder.setTotalPrice(50.0 * 10);
-        returnedOrder.setReturned(true);
-        orderRepository.save(returnedOrder);
+        // Add orders using OrderService
+        orderService.createOrder(
+                customer.getId(),
+                car1.getId(),
+                LocalDate.of(2024, 1, 1),
+                LocalDate.of(2024, 1, 10),
+                LocationType.ISTANBUL.name(),
+                LocationType.ANKARA.name()
+        );
 
-        Order notReturnedOrder = new Order();
-        notReturnedOrder.setCustomer(customer);
-        notReturnedOrder.setCar(car2);
-        notReturnedOrder.setRentDate(LocalDate.of(2024, 12, 1));
-        notReturnedOrder.setReturnDate(LocalDate.of(2024, 12, 10));
-        notReturnedOrder.setPickupLocation(LocationType.ANKARA);
-        notReturnedOrder.setDropoffLocation(LocationType.IZMIR);
-        notReturnedOrder.setTotalPrice(45.0 * 10);
-        notReturnedOrder.setReturned(false);
-        orderRepository.save(notReturnedOrder);
+        orderService.createOrder(
+                customer.getId(),
+                car2.getId(),
+                LocalDate.of(2024, 12, 1),
+                LocalDate.of(2024, 12, 10),
+                LocationType.ANKARA.name(),
+                LocationType.IZMIR.name()
+        );
 
         System.out.println("Data loaded successfully!");
     }

@@ -25,24 +25,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-async function loadOrderHistory() {
+async function loadOrderHistory(tcNo) {
     try {
-        const orders = await apiFetch(`/api/orders/customer/history`, 'GET');
+        const history = await apiFetch(`/api/history/customer/${tcNo}`, 'GET');
         const orderHistoryList = document.getElementById("order-history-list");
 
-        if (orders.length === 0) {
-            orderHistoryList.innerHTML = '<p>No orders found.</p>';
+        if (history.length === 0) {
+            orderHistoryList.innerHTML = '<p>No orders found in history.</p>';
             return;
         }
 
-        orderHistoryList.innerHTML = orders.map(order => {
-            const rentDate = new Date(order.rentDate).toLocaleDateString();
-            const returnDate = new Date(order.returnDate).toLocaleDateString();
-            const totalPrice = order.totalPrice;
+        orderHistoryList.innerHTML = history.map(entry => {
+            const rentDate = new Date(entry.rentDate).toLocaleDateString();
+            const returnDate = new Date(entry.returnDate).toLocaleDateString();
+            const totalPrice = entry.totalPrice;
 
             return `
                 <div class="order-item">
-                    <p><strong>Car:</strong> ${order.car.brand} ${order.car.model}</p>
+                    <p><strong>Car:</strong> ${entry.carBrand} ${entry.carModel}</p>
                     <p><strong>Rent Date:</strong> ${rentDate}</p>
                     <p><strong>Return Date:</strong> ${returnDate}</p>
                     <p><strong>Total Price:</strong> $${totalPrice}</p>
@@ -51,9 +51,10 @@ async function loadOrderHistory() {
         }).join('');
     } catch (error) {
         console.error("Error fetching order history:", error);
-        alert("Failed to load order history. Please try again.");
+        alert("Failed to load order history from history table. Please try again.");
     }
 }
+
 
 
 function calculateTotalPrice(order) {
@@ -65,20 +66,25 @@ function calculateTotalPrice(order) {
 
 // Update profile information
 document.getElementById("update-profile-btn").addEventListener("click", async () => {
+    // Mevcut profil bilgilerini localStorage'dan al
+    const currentProfile = JSON.parse(localStorage.getItem("currentProfile"));
+
+    // Güncellenmiş profil verilerini hazırlayın
     const updatedProfile = {};
 
-    // Sadece doldurulmuş alanları ekle
+    // Form alanlarını alın
     const firstName = document.getElementById("firstName").value.trim();
     const lastName = document.getElementById("lastName").value.trim();
     const email = document.getElementById("email").value.trim();
     const phone = document.getElementById("phone").value.trim();
     const address = document.getElementById("address").value.trim();
 
-    if (firstName) updatedProfile.firstName = firstName;
-    if (lastName) updatedProfile.lastName = lastName;
-    if (email) updatedProfile.email = email;
-    if (phone) updatedProfile.phone = phone;
-    if (address) updatedProfile.address = address;
+    // Eğer bir alan boşsa, mevcut profilden alın
+    updatedProfile.firstName = firstName || currentProfile.firstName;
+    updatedProfile.lastName = lastName || currentProfile.lastName;
+    updatedProfile.email = email || currentProfile.email;
+    updatedProfile.phone = phone || currentProfile.phone;
+    updatedProfile.address = address || currentProfile.address;
 
     try {
         const response = await apiFetch('/api/customers/profile', 'PUT', updatedProfile);
@@ -95,6 +101,25 @@ document.getElementById("update-profile-btn").addEventListener("click", async ()
         alert("Failed to update profile. Please try again.");
     }
 });
+
+// Profil bilgilerini localStorage'a kaydetmek için DOMContentLoaded olayını kullanın
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const profile = await apiFetch('/api/customers/profile', 'GET');
+        localStorage.setItem("currentProfile", JSON.stringify(profile));
+
+        // Formu doldurun
+        document.getElementById("firstName").value = profile.firstName || "";
+        document.getElementById("lastName").value = profile.lastName || "";
+        document.getElementById("email").value = profile.email || "";
+        document.getElementById("phone").value = profile.phone || "";
+        document.getElementById("address").value = profile.address || "";
+    } catch (error) {
+        console.error("Error loading profile:", error);
+        alert("Failed to load profile information.");
+    }
+});
+
 
 //Logout
 
