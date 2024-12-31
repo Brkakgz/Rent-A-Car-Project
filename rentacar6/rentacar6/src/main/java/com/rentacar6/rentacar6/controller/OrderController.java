@@ -1,10 +1,12 @@
 package com.rentacar6.rentacar6.controller;
 
+import com.rentacar6.rentacar6.dto.CreateOrderRequest;
 import com.rentacar6.rentacar6.model.Order;
 import com.rentacar6.rentacar6.service.OrderService;
 import com.rentacar6.rentacar6.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -20,30 +22,44 @@ public class OrderController {
     @Autowired
     private CustomerService customerService;
 
-    // T.C. Kimlik Numarası ile sipariş oluşturma
-    @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestParam String tcNo,
-                                             @RequestParam Long carId,
-                                             @RequestParam String rentDate,
-                                             @RequestParam String returnDate) {
-        LocalDate rent = LocalDate.parse(rentDate);
-        LocalDate ret = LocalDate.parse(returnDate);
-        Long customerId = customerService.getCustomerByTcNo(tcNo).getId(); // T.C. ile müşteri ID'sini al
-        return ResponseEntity.ok(orderService.createOrder(tcNo, carId, rent, ret));
-    }
+    // Sipariş oluşturma
+    @PostMapping("/create")
+    public ResponseEntity<Order> createOrder(@RequestBody CreateOrderRequest orderRequest) {
+        // Giriş yapan kullanıcının kimliğini alın
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Long customerId = customerService.getCustomerByEmail(email).getId();
 
-    // Belirli bir müşterinin siparişlerini görüntüleme (T.C. Kimlik Numarası ile)
-    @GetMapping("/{tcNo}")
-    public ResponseEntity<List<Order>> getOrdersByCustomer(@PathVariable String tcNo) {
-        Long customerId = customerService.getCustomerByTcNo(tcNo).getId(); // T.C. ile müşteri ID'sini al
-        return ResponseEntity.ok(orderService.getOrdersByCustomer(customerId));
+        // Tarihleri Parse Et
+        LocalDate rentDate = LocalDate.parse(orderRequest.getRentDate());
+        LocalDate returnDate = LocalDate.parse(orderRequest.getReturnDate());
+
+        // Sipariş oluştur ve geri döndür
+        try {
+            Order createdOrder = orderService.createOrder(
+                    customerId,
+                    orderRequest.getCarId(),
+                    rentDate,
+                    returnDate,
+                    orderRequest.getPickupLocation(),
+                    orderRequest.getDropoffLocation()
+            );
+            return ResponseEntity.ok(createdOrder);
+        } catch (RuntimeException e) {
+            // Hataları yakalayıp uygun HTTP yanıtını döndür
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     // Giriş yapan müşterinin sipariş geçmişini görüntüleme
-    @GetMapping("/history/{tcNo}")
-    public ResponseEntity<List<Order>> getOrderHistory(@PathVariable String tcNo) {
-        Long customerId = customerService.getCustomerByTcNo(tcNo).getId(); // T.C. ile müşteri ID'sini al
-        return ResponseEntity.ok(orderService.getOrdersByCustomer(customerId));
+    @GetMapping("/customer/history")
+    public ResponseEntity<List<Order>> getCustomerOrderHistory() {
+        // Giriş yapan kullanıcının kimliğini alın
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Long customerId = customerService.getCustomerByEmail(email).getId();
+
+        // Müşterinin sipariş geçmişini al ve döndür
+        List<Order> orders = orderService.getOrdersByCustomer(customerId);
+        return ResponseEntity.ok(orders);
     }
 
     // Teslim edilen siparişleri listeleme

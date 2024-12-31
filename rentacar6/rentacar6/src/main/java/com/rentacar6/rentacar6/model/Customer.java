@@ -28,9 +28,11 @@ public class Customer {
 
     private String password;
 
+    private String role; // Yeni alan eklendi
+
     public Customer() {}
 
-    public Customer(String firstName, String lastName, String email, String phone, String address, String tcNo, String password) {
+    public Customer(String firstName, String lastName, String email, String phone, String address, String tcNo, String password, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -38,8 +40,8 @@ public class Customer {
         this.address = address;
         this.tcNo = tcNo;
         this.password = password;
+        this.role = role;
     }
-
 
     // Getter ve Setter metotları
     public Long getId() {
@@ -104,5 +106,13 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

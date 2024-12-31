@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent A Car</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="logo">
+            <h1>Rent A Car</h1>
+        </div>
+        <nav id="nav-links">
+            <a href="login.html" id="login-link">Login</a>
+            <a href="register.html" id="register-link">Register</a>
+            <a href="profile.html" id="profile-link" style="display: none;">Profile</a>
+            <a href="admin.html" id="admin-panel-link" style="display: none;">Admin Panel</a>
+            <a href="#" id="logout-link" style="display: none;">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <!-- Filter Section -->
+    <section class="filter-container">
+        <h2>Filter Cars</h2>
+        <label for="brand">Brand:</label>
+        <input type="text" id="brand" placeholder="e.g. Toyota">
+
+        <label for="model">Model:</label>
+        <input type="text" id="model" placeholder="e.g. Corolla">
+
+        <label for="color">Color:</label>
+        <input type="text" id="color" placeholder="e.g. Black">
+
+        <label for="minPrice">Min Price:</label>
+        <input type="number" id="minPrice" placeholder="e.g. 100" min="0">
+
+        <label for="maxPrice">Max Price:</label>
+        <input type="number" id="maxPrice" placeholder="e.g. 500" min="0">
+
+        <label for="year">Year:</label>
+        <input type="number" id="year" placeholder="e.g. 2020" min="1900">
+
+        <label for="minKilometers">Min Kilometers:</label>
+        <input type="number" id="minKilometers" placeholder="e.g. 0" min="0">
+
+        <label for="maxKilometers">Max Kilometers:</label>
+        <input type="number" id="maxKilometers" placeholder="e.g. 1000000" min="0">
+
+        <label for="gearType">Gear Type:</label>
+        <select id="gearType">
+            <!-- Dinamik olarak doldurulacak -->
+        </select>
+
+        <label for="fuelType">Fuel Type:</label>
+        <select id="fuelType">
+            <!-- Dinamik olarak doldurulacak -->
+        </select>
+
+        <label for="location">Location:</label>
+        <select id="location">
+            <!-- Dinamik olarak doldurulacak -->
+        </select>
+
+        <button id="apply-filters-button">Apply Filters</button>
+    </section>
+
+
+    <!-- Cars Section -->
+    <section id="cars" class="section">
+        <div class="container">
+            <h2>Available Cars</h2>
+            <div id="car-list" class="car-grid">
+                <!-- Dinamik veriler buraya yüklenecek -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Section -->
+    <div id="car-details-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 id="modal-car-title">Car Title</h3>
+            <p id="modal-car-description">Car Description</p>
+            <p id="modal-car-price">Price Per Day: $</p>
+            <p id="modal-car-available-count">Available Cars: </p> <!-- Mevcut araç sayısı burada görüntülenecek -->
+
+            <label for="rent-date">Rent Date:</label>
+            <input type="date" id="rent-date">
+
+            <label for="return-date">Return Date:</label>
+            <input type="date" id="return-date">
+
+            <label for="dropoff-location">Dropoff Location:</label>
+            <select id="dropoff-location">
+                <!-- Dinamik olarak doldurulacak -->
+            </select>
+
+            <p>Total Price: <span id="total-price">$0</span></p>
+            <button id="modal-rent-button">Rent Now</button>
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2024 Rent A Car. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="js/index.js" type="module"></script>
+</body>
+</html>

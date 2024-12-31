@@ -9,6 +9,5 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByCustomer(Customer customer);
     List<Order> findByReturned(boolean returned);
-
     List<Order> findByReturned(Boolean returned);
 }

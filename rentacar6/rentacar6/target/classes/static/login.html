@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Rent A Car</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+    <h1>
+        Login
+        <span style="font-size: 0.8rem; margin-left: 15px;">
+                <a href="/index.html" style="color: #FFFFFF; text-decoration: none;">Home</a>
+            </span>
+    </h1>
+</header>
+<main>
+    <section id="login">
+        <form id="login-form" class="form">
+            <h2>Login</h2>
+            <div id="message-box" class="message" style="display: none;"></div>
+
+            <label for="email">Username</label>
+            <input type="text" id="email" name="email" placeholder="Enter your e-mail" required>
+
+            <label for="password">Password</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <span class="toggle-password" id="toggle-password">
+                        <i class="fas fa-eye"></i>
+                    </span>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+            <p class="switch-form">Don't have an account? <a href="register.html">Register here</a></p>
+        </form>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2024 Rent A Car</p>
+</footer>
+<script src="js/login.js" type="module"></script>
+</body>
+</html>

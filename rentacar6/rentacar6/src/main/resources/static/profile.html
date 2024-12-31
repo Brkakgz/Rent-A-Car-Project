@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header>
+    <h1>User Profile</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a id="logout" href="#">Logout</a>
+    </nav>
+</header>
+<main>
+    <section id="profile" class="content-container">
+        <h2>Profile Information</h2>
+        <div class="profile-details">
+            <p><strong>First Name:</strong> <span id="profile-firstname"></span></p>
+            <p><strong>Last Name:</strong> <span id="profile-lastname"></span></p>
+            <p><strong>Email:</strong> <span id="profile-email"></span></p>
+            <p><strong>Phone:</strong> <span id="profile-phone"></span></p>
+            <p><strong>Address:</strong> <span id="profile-address"></span></p>
+            <p><strong>TC Number:</strong> <span id="profile-tc"></span></p>
+        </div>
+    </section>
+    <section id="profile-update" class="content-container">
+        <h2>Update Profile</h2>
+        <form id="profile-update-form">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName">
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone">
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address">
+
+            <button type="button" id="update-profile-btn">Update Profile</button>
+        </form>
+    </section>
+    <section id="order-history" class="content-container">
+        <h2>Order History</h2>
+        <div id="order-history-list">
+            <!-- Kullanıcının sipariş geçmişi burada görünecek -->
+        </div>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2024 Rent A Car</p>
+</footer>
+<script src="js/profile.js" type="module"></script>
+</body>
+</html>

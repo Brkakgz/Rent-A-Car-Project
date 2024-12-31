@@ -1,5 +1,6 @@
 package com.rentacar6.rentacar6.model;
 
+import com.rentacar6.rentacar6.enums.LocationType;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -19,22 +20,31 @@ public class Order {
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
-    private LocalDate rentDate;
-    private LocalDate returnDate;
+    private LocalDate rentDate; // Kiralama tarihi
+    private LocalDate returnDate; // Teslim tarihi
 
-    private double totalPrice;
+    private double totalPrice; // Toplam kira ücreti
+
+    @Enumerated(EnumType.STRING)
+    private LocationType pickupLocation; // Teslim alma lokasyonu
+
+    @Enumerated(EnumType.STRING)
+    private LocationType dropoffLocation; // Teslim etme lokasyonu
 
     @Column(nullable = false)
-    private boolean returned; // Yeni alan: Siparişin teslim edilip edilmediğini takip eder
+    private boolean returned; // Siparişin teslim edilip edilmediğini takip eder
 
     public Order() {}
 
-    public Order(Customer customer, Car car, LocalDate rentDate, LocalDate returnDate, double totalPrice) {
+    public Order(Customer customer, Car car, LocalDate rentDate, LocalDate returnDate, double totalPrice,
+                 LocationType pickupLocation, LocationType dropoffLocation) {
         this.customer = customer;
         this.car = car;
         this.rentDate = rentDate;
         this.returnDate = returnDate;
         this.totalPrice = totalPrice;
+        this.pickupLocation = pickupLocation;
+        this.dropoffLocation = dropoffLocation;
         this.returned = false; // Yeni siparişler varsayılan olarak teslim edilmemiş olur
     }
 
@@ -87,11 +97,27 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public boolean isReturned() { // Getter for returned
+    public LocationType getPickupLocation() {
+        return pickupLocation;
+    }
+
+    public void setPickupLocation(LocationType pickupLocation) {
+        this.pickupLocation = pickupLocation;
+    }
+
+    public LocationType getDropoffLocation() {
+        return dropoffLocation;
+    }
+
+    public void setDropoffLocation(LocationType dropoffLocation) {
+        this.dropoffLocation = dropoffLocation;
+    }
+
+    public boolean isReturned() {
         return returned;
     }
 
-    public void setReturned(boolean returned) { // Setter for returned
+    public void setReturned(boolean returned) {
         this.returned = returned;
     }
 }

@@ -20,9 +20,6 @@ import java.util.Objects;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private static final String AUTHORIZATION = "Authorization";
-    private static final String BEARER = "Bearer ";
-
     @Autowired
     private JwtService jwtService;
 
@@ -33,24 +30,61 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        String authHeader = request.getHeader(AUTHORIZATION);
+        String authHeader = request.getHeader("Authorization");
         String token = null;
-        String username = null;
+        String email = null;
 
-        if (Objects.nonNull(authHeader) && authHeader.startsWith(BEARER)) {
-            token = authHeader.substring(7);
-            username = jwtService.extractEmail(token);
+        String requestURI = request.getRequestURI();
+        if (requestURI.equals("/api/auth/register")) {
+            chain.doFilter(request, response);
+            return;
         }
 
-        if (Objects.nonNull(username) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            if (jwtService.validateToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+        if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
+            token = authHeader.substring(7);
+            try {
+                email = jwtService.extractEmail(token);
+            } catch (Exception e) {
+                logger.error("JWT Token parsing failed: " + e.getMessage());
+                // Token hatalı ise misafir kullanıcı olarak devam et
+                chain.doFilter(request, response);
+                return;
             }
         }
+
+        if (Objects.nonNull(email) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
+            try {
+                // Kullanıcının detaylarını yükle
+                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+
+                // Rolü olduğu gibi kullan
+                String role = userDetails.getAuthorities().stream()
+                        .findFirst()
+                        .map(grantedAuthority -> grantedAuthority.getAuthority())
+                        .orElse("");
+
+                // JWT doğrulama
+                if (jwtService.validateToken(token, email, role)) {
+                    // Kullanıcıyı doğrula ve güvenlik bağlamına ekle
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                } else {
+                    // Hatalı token veya rol uyuşmazlığı
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid JWT token or role mismatch");
+                    return;
+                }
+            } catch (Exception e) {
+                // JWT doğrulama hatası
+                logger.error("JWT validation failed: " + e.getMessage());
+                // Doğrulama hatasında misafir kullanıcı olarak devam et
+                chain.doFilter(request, response);
+                return;
+            }
+        }
+
+        // İstek zincirini devam ettir
         chain.doFilter(request, response);
     }
 }

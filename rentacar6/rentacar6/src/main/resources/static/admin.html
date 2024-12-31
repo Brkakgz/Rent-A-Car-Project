@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header>
+    <h1>Admin Panel</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a id="logout" href="#">Logout</a>
+    </nav>
+</header>
+<main>
+    <section id="admin-content" class="content-container">
+        <h2>Manage Users and Cars</h2>
+        <div class="admin-actions">
+            <button id="view-users-btn" class="btn">View Users</button>
+            <button id="view-orders-btn" class="btn">View Orders</button>
+            <button id="view-rented-cars-btn" class="btn">View Rented Cars</button>
+            <button id="add-car-btn" class="btn">Add New Car</button>
+            <button id="view-cars-btn" class="btn">View All Cars</button>
+            <button id="view-history-btn" class="btn">View Rental History</button>
+        </div>
+        <div id="admin-display-area" class="table-container"></div>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2024 Rent A Car</p>
+</footer>
+
+<!-- Araç ekleme modal -->
+<div id="add-car-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h3>Add New Car</h3>
+        <label for="car-brand">Brand:</label>
+        <input type="text" id="car-brand" />
+        <label for="car-model">Model:</label>
+        <input type="text" id="car-model" />
+        <label for="car-year">Year:</label>
+        <input type="number" id="car-year" />
+        <label for="car-color">Color:</label>
+        <input type="text" id="car-color" />
+        <label for="car-daily-price">Daily Price:</label>
+        <input type="number" id="car-daily-price" />
+        <label for="car-kilometer">Mileage (km):</label> <!-- Added field -->
+        <input type="number" id="car-kilometer" />
+        <label for="car-available-count">Available Count:</label> <!-- Added field -->
+        <input type="number" id="car-available-count" />
+        <label for="car-availability">Available:</label>
+        <input type="checkbox" id="car-availability" />
+        <label for="car-image-url">Image URL:</label>
+        <input type="text" id="car-image-url" />
+        <label for="car-gear-type">Gear Type:</label>
+        <select id="car-gear-type"></select>
+        <label for="car-fuel-type">Fuel Type:</label>
+        <select id="car-fuel-type"></select>
+        <label for="car-location">Location:</label>
+        <select id="car-location"></select>
+        <button id="add-car-submit" class="btn">Add Car</button>
+        <button id="add-car-cancel" class="btn">Cancel</button>
+    </div>
+</div>
+
+<!-- Araç güncelleme modal -->
+<div id="update-car-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h3>Update Car</h3>
+        <input type="hidden" id="update-car-id">
+        <label for="update-car-brand">Brand:</label>
+        <input type="text" id="update-car-brand">
+        <label for="update-car-model">Model:</label>
+        <input type="text" id="update-car-model">
+        <label for="update-car-year">Year:</label>
+        <input type="number" id="update-car-year">
+        <label for="update-car-color">Color:</label>
+        <input type="text" id="update-car-color">
+        <label for="update-car-daily-price">Daily Price:</label>
+        <input type="number" id="update-car-daily-price">
+        <label for="update-car-available-count">Available Count:</label>
+        <input type="number" id="update-car-available-count">
+        <label for="update-car-availability">Available:</label>
+        <input type="checkbox" id="update-car-availability">
+        <label for="update-car-kilometer">Mileage (km):</label>
+        <input type="number" id="update-car-kilometer" />
+        <label for="update-car-gear-type">Gear Type:</label>
+        <select id="update-car-gear-type"></select>
+        <label for="update-car-fuel-type">Fuel Type:</label>
+        <select id="update-car-fuel-type"></select>
+        <label for="update-car-location">Location:</label>
+        <select id="update-car-location"></select>
+        <!-- Update Modal Save Button with ID -->
+        <button id="update-car-save" class="btn">Save Changes</button>
+        <button id="update-car-close" class="btn">Cancel</button>
+
+
+    </div>
+</div>
+
+<script src="js/admin.js" type="module"></script>
+</body>
+</html>

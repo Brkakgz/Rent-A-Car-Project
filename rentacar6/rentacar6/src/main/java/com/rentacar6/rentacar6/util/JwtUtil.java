@@ -1,4 +1,4 @@
-package com.rentacar6.rentacar6.util;
+/*package com.rentacar6.rentacar6.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.Claims;
@@ -78,3 +78,6 @@ public class JwtUtil {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 }
+*/
+
+//ŞİMDİLİK DEVREDIŞI BIRAKILDI

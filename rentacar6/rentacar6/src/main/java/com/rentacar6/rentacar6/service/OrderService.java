@@ -1,5 +1,6 @@
 package com.rentacar6.rentacar6.service;
 
+import com.rentacar6.rentacar6.enums.LocationType;
 import com.rentacar6.rentacar6.model.Car;
 import com.rentacar6.rentacar6.model.Customer;
 import com.rentacar6.rentacar6.model.Order;
@@ -25,38 +26,88 @@ public class OrderService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    // Sipariş oluşturma (T.C. Kimlik No ile)
-    public Order createOrder(String tcNo, Long carId, LocalDate rentDate, LocalDate returnDate) {
-        Customer customer = customerRepository.findByTcNo(tcNo)
-                .orElseThrow(() -> new RuntimeException("Customer not found with T.C. No: " + tcNo));
+    @Autowired
+    private HistoryService historyService;
+
+
+
+    // Sipariş oluşturma (Müşteri ID ve Araç ID ile)
+    public Order createOrder(Long customerId, Long carId, LocalDate rentDate, LocalDate returnDate, String pickupLocation, String dropoffLocation) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Customer not found with id: " + customerId));
         Car car = carRepository.findById(carId)
                 .orElseThrow(() -> new RuntimeException("Car not found with id: " + carId));
 
-        if (!car.isAvailable()) {
-            throw new RuntimeException("Car is not available for rent: " + carId);
+        // Araç uygun değilse hata döndür
+        if (!car.isAvailable() || car.getAvailableCount() <= 0) {
+            throw new RuntimeException("The selected car is currently unavailable.");
         }
 
+        // Tarihlerin geçerli olup olmadığını kontrol et
+        if (rentDate.isAfter(returnDate) || rentDate.isEqual(returnDate)) {
+            throw new RuntimeException("Invalid rent or return date.");
+        }
+
+        // Toplam fiyatı hesapla
         long days = ChronoUnit.DAYS.between(rentDate, returnDate);
         double totalPrice = days * car.getDailyPrice();
 
-        car.setAvailable(false);
+        // Lokasyon doğrulaması
+        LocationType pickupEnumLocation = LocationType.valueOf(pickupLocation.toUpperCase());
+        LocationType dropoffEnumLocation = LocationType.valueOf(dropoffLocation.toUpperCase());
+
+        // Sipariş oluştur
+        Order order = new Order();
+        order.setCustomer(customer);
+        order.setCar(car);
+        order.setRentDate(rentDate);
+        order.setReturnDate(returnDate);
+        order.setPickupLocation(pickupEnumLocation); // Enum set ediliyor
+        order.setDropoffLocation(dropoffEnumLocation); // Enum set ediliyor
+        order.setTotalPrice(totalPrice);
+        order.setReturned(false);
+
+        // Araç sayısını azalt
+        car.setAvailableCount(car.getAvailableCount() - 1);
+        if (car.getAvailableCount() == 0) {
+            car.setAvailable(false); // Tüm araçlar kiralanmışsa uygunluğu kaldır
+        }
         carRepository.save(car);
 
-        Order order = new Order(customer, car, rentDate, returnDate, totalPrice);
-        return orderRepository.save(order);
+        // Siparişi kaydet
+        Order savedOrder = orderRepository.save(order);
+
+        // History kaydı yap
+        historyService.saveHistory(savedOrder);
+
+        return savedOrder;
     }
+
+    // Araç teslim alma
+    public void markOrderAsReturned(Long orderId) {
+        Order order = getOrderById(orderId);
+
+        if (order.isReturned()) {
+            throw new RuntimeException("Order is already marked as returned.");
+        }
+
+        // Siparişi teslim edildi olarak işaretle
+        order.setReturned(true);
+
+        // Araç sayısını artır
+        Car car = order.getCar();
+        car.setAvailableCount(car.getAvailableCount() + 1);
+        car.setAvailable(true); // Araç tekrar kullanılabilir hale gelir
+        carRepository.save(car);
+
+        orderRepository.save(order);
+    }
+
 
     // Belirli bir müşteriye ait siparişleri getir
     public List<Order> getOrdersByCustomer(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found with id: " + customerId));
-        return orderRepository.findByCustomer(customer);
-    }
-
-    // T.C. Kimlik No ile siparişleri getir
-    public List<Order> getOrdersByTcNo(String tcNo) {
-        Customer customer = customerRepository.findByTcNo(tcNo)
-                .orElseThrow(() -> new RuntimeException("Customer not found with T.C. No: " + tcNo));
         return orderRepository.findByCustomer(customer);
     }
 
@@ -76,17 +127,17 @@ public class OrderService {
                 .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderId));
     }
 
-    // Teslim edilen siparişleri listeleme
+    // Teslim edilen siparişleri listele
     public List<Order> getReturnedOrders() {
         return orderRepository.findByReturned(true);
     }
 
-    // Teslim edilmeyen siparişleri listeleme
+    // Teslim edilmeyen siparişleri listele
     public List<Order> getUnreturnedOrders() {
         return orderRepository.findByReturned(false);
     }
 
-    // Teslim durumu ile siparişleri listeleme
+    // Teslim durumu ile siparişleri listele
     public List<Order> getOrdersByReturnedStatus(Boolean returned) {
         return orderRepository.findByReturned(returned);
     }
@@ -95,8 +146,9 @@ public class OrderService {
     public void deleteOrder(Long orderId) {
         Order order = getOrderById(orderId);
 
-        // Araç tekrar kiralanabilir hale getiriliyor
+        // Araç tekrar kullanılabilir hale getiriliyor
         Car car = order.getCar();
+        car.setAvailableCount(car.getAvailableCount() + 1);
         car.setAvailable(true);
         carRepository.save(car);
 

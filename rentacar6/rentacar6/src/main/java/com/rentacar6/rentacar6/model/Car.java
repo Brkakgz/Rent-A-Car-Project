@@ -1,5 +1,9 @@
 package com.rentacar6.rentacar6.model;
 
+import com.rentacar6.rentacar6.enums.FuelType;
+import com.rentacar6.rentacar6.enums.GearType;
+import com.rentacar6.rentacar6.enums.LocationType;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -14,21 +18,58 @@ public class Car {
     private String model;
     private int year;
     private String color;
-    private double dailyPrice;
-    private boolean isAvailable;
-    private String imageUrl;
+
+    @Enumerated(EnumType.STRING)
+    private GearType gearType; // Vites tipi
+
+    @Enumerated(EnumType.STRING)
+    private FuelType fuelType; // Yakıt tipi
+
+    private int kilometer; // Araç kilometresi
+    private double dailyPrice; // Günlük kira fiyatı
+
+    @Column(name = "available_count")
+    private int availableCount; // Mevcut araç sayısı
+    private boolean isAvailable; // Araç kiralamaya uygun mu
+    private String imageUrl; // Görsel URL
+
+    @Enumerated(EnumType.STRING)
+    private LocationType location; // Aracın bulunduğu lokasyon
 
     // Default Constructor
     public Car() {}
 
+    public GearType getGearType() {
+        return gearType;
+    }
+
+    public void setGearType(GearType gearType) {
+        this.gearType = gearType;
+    }
+
+    public int getKilometer() {
+        return kilometer;
+    }
+
+    public void setKilometer(int kilometer) {
+        this.kilometer = kilometer;
+    }
+
     // Parametreli Constructor
-    public Car(String brand, String model, int year, String color, double dailyPrice, boolean isAvailable) {
+    public Car(String brand, String model, int year, String color, GearType gearType, FuelType fuelType,
+               int kilometer, double dailyPrice, int availableCount, boolean isAvailable, String imageFileName, LocationType location) {
         this.brand = brand;
         this.model = model;
         this.year = year;
         this.color = color;
+        this.gearType = gearType;
+        this.fuelType = fuelType;
+        this.kilometer = kilometer;
         this.dailyPrice = dailyPrice;
+        this.availableCount = availableCount;
         this.isAvailable = isAvailable;
+        this.imageUrl = "/uploads/cars/" + imageFileName;
+        this.location = location;
     }
 
     // Getter and Setter Metotları
@@ -72,12 +113,31 @@ public class Car {
         this.color = color;
     }
 
+
+    public FuelType getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(FuelType fuelType) {
+        this.fuelType = fuelType;
+    }
+
+
+
     public double getDailyPrice() {
         return dailyPrice;
     }
 
     public void setDailyPrice(double dailyPrice) {
         this.dailyPrice = dailyPrice;
+    }
+
+    public int getAvailableCount() {
+        return availableCount;
+    }
+
+    public void setAvailableCount(int availableCount) {
+        this.availableCount = availableCount;
     }
 
     public boolean isAvailable() {
@@ -94,5 +154,13 @@ public class Car {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public LocationType getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationType location) {
+        this.location = location;
     }
 }
