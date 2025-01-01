@@ -13,7 +13,6 @@
 **Araç Yönetimi**: Yeni araç ekleyebilir, mevcut araçları güncelleyebilir veya silebilirsiniz. Araçların özelliklerini (görünürlük, renk, fiyat vb.) düzenleyebilirsiniz.  
 **Kiralama Geçmişi Görüntüleme**: Bütün kullanıcıların kiralama geçmişine erişerek detaylı inceleme yapabilirsiniz.  
 **Araç Teslim Alma İşlemi**: Kullanıcıdan teslim alınan araçların stoğu otomatik güncellenir. Eğer araç pasif durumda ise, teslim alındıktan sonra tekrar görünür hale gelir.  
-**Marka Yönetimi**: Bir markanın silinmesi sırasında, bağlı araçlar varsa işlemin engellenmesi gibi kontroller mevcuttur.  
 
 ## Teknolojiler
 ### Backend
