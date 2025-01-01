@@ -42,9 +42,11 @@ async function loadOrderHistory(tcNo) {
 
             return `
                 <div class="order-item">
-                    <p><strong>Car:</strong> ${entry.carBrand} ${entry.carModel}</p>
+                    <p><strong>Car:</strong> ${entry.carBrand} ${entry.carModel} ${entry.carYear} ${entry.carColor} ${entry.carGearType} ${entry.carFuelType}</p>
                     <p><strong>Rent Date:</strong> ${rentDate}</p>
                     <p><strong>Return Date:</strong> ${returnDate}</p>
+                    <p><strong>Pickup Location:</strong> ${entry.pickupLocation}</p>
+                    <p><strong>Dropoff Location:</strong> ${entry.dropoffLocation}</p>
                     <p><strong>Total Price:</strong> $${totalPrice}</p>
                 </div>
             `;

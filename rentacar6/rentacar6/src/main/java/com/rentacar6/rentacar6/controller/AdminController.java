@@ -40,7 +40,7 @@ public class AdminController {
     public ResponseEntity<List<String>> getAllUsers() {
         List<String> users = customerService.getAllCustomers()
                 .stream()
-                .map(customer -> "T.C. No: " + customer.getTcNo() + " - " + customer.getFirstName() + " " + customer.getLastName())
+                .map(customer -> "T.C. No: " + customer.getTcNo() + " - " +" Name: "+ customer.getFirstName() + " " + customer.getLastName() + " - "+" Email: "+customer.getEmail()+" - "+" Adress: "+customer.getAddress()+" - "+" Phone Number: "+customer.getPhone())
                 .collect(Collectors.toList());
         return ResponseEntity.ok(users);
     }

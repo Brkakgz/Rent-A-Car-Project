@@ -107,6 +107,9 @@ async function loadAllCars() {
                     <th>Model</th>
                     <th>Year</th>
                     <th>Color</th>
+                    <th>Fuel Type</th>
+                    <th>Gear Type</th>
+                    <th>Location</th>
                     <th>Daily Price</th>
                     <th>Availability</th>
                     <th>Actions</th>
@@ -119,6 +122,9 @@ async function loadAllCars() {
                         <td>${car.model}</td>
                         <td>${car.year}</td>
                         <td>${car.color}</td>
+                        <td>${car.fuelType}</td>
+                        <td>${car.gearType}</td>
+                        <td>${car.location}</td>
                         <td>$${car.dailyPrice}</td>
                         <td>${car.available ? "Yes" : "No"}</td>
                         <td>
@@ -140,6 +146,7 @@ async function loadAllCars() {
                         updateCarAvailability(carId, !availability); // Durumu tersine çevir
                     });
                 });
+                 addUpdateCarButtonListeners(); // "Update" düğmeleri için event listener ekle
     } catch (error) {
         console.error("Error loading cars:", error);
         displayArea.innerHTML = '<p>Error loading cars. Please try again later.</p>';
@@ -286,7 +293,6 @@ document.getElementById("view-orders-btn").addEventListener("click", async () =>
             <table class="admin-table">
                 <thead>
                     <tr>
-                        <th>Order ID</th>
                         <th>Car</th>
                         <th>Customer</th>
                         <th>Rent Date</th>
@@ -299,7 +305,6 @@ document.getElementById("view-orders-btn").addEventListener("click", async () =>
                         .map(
                             order =>`
                         <tr>
-                            <td>${order.id}</td>
                             <td>${order.car.brand} ${order.car.model}</td>
                             <td>${order.customer.firstName} ${order.customer.lastName}</td>
                             <td>${order.rentDate}</td>
@@ -330,10 +335,11 @@ document.getElementById("view-cars-btn").addEventListener("click", async () => {
 
 //Update butonu bağımsız hale geldi
 function addUpdateCarButtonListeners() {
-    document.querySelectorAll(".update-car-btn").forEach(button => {
+    const updateButtons = document.querySelectorAll(".update-car-btn");
+    updateButtons.forEach(button => {
         button.addEventListener("click", async (e) => {
             const carId = e.target.dataset.id;
-            showUpdateCarModal(carId); // Güncelleme modalını göster
+            await showUpdateCarModal(carId); // Güncelleme modalını göster
         });
     });
 }
@@ -484,7 +490,7 @@ async function loadRentalDetails() {
                             rental => `
                         <tr>
                             <td>${rental.customer.firstName} ${rental.customer.lastName}</td>
-                            <td>${rental.car.brand} ${rental.car.model} (${rental.car.year})</td>
+                            <td>${rental.car.brand} ${rental.car.model} (${rental.car.year}) </td>
                             <td>${rental.pickupDate}</td>
                             <td>${rental.dropoffDate}</td>
                             <td>${rental.pickupLocation}</td>
@@ -527,7 +533,7 @@ async function loadRentalHistory() {
                     ${history.map(record => `
                         <tr>
                             <td>${record.customerName} (T.C. ${record.tcNo})</td>
-                            <td>${record.carBrand} ${record.carModel} (${record.carYear})</td>
+                            <td>${record.carBrand} ${record.carModel} (${record.carYear}) (${record.carColor}) (${record.carFuelType}) (${record.carGearType})</td>
                             <td>${record.rentDate}</td>
                             <td>${record.returnDate}</td>
                             <td>${record.pickupLocation}</td>
@@ -543,6 +549,10 @@ async function loadRentalHistory() {
         displayArea.innerHTML = '<p>Error loading rental history. Please try again later.</p>';
     }
 }
+
+
+
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
