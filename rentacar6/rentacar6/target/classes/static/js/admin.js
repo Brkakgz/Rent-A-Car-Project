@@ -17,9 +17,27 @@ function closeAddCarModal() {
     modal.style.display = "none";
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    const filePathInput = document.getElementById("filePath"); // Dosya seçme alanının ID'si
+    if (filePathInput) {
+        filePathInput.addEventListener("change", function (event) {
+            const fullPath = event.target.value; // Tam dosya yolu
+            const fileName = fullPath.split("\\").pop(); // Sadece dosya adını al
+            const imageUrlInput = document.getElementById("car-image-url");
+            if (imageUrlInput) {
+                imageUrlInput.value = fileName; // Görsel URL alanını doldur
+            } else {
+                console.error("Element with ID 'car-image-url' not found");
+            }
+        });
+    } else {
+        console.error("Element with ID 'filePath' not found");
+    }
+});
+
+
 // Yeni araç ekle - GÜNCELLENDİ
 async function addNewCar() {
-    // Araç bilgilerini topla
     const carDetails = {
         brand: document.getElementById("car-brand").value,
         model: document.getElementById("car-model").value,
@@ -28,7 +46,7 @@ async function addNewCar() {
         dailyPrice: parseFloat(document.getElementById("car-daily-price").value),
         availableCount: parseInt(document.getElementById("car-available-count").value),
         available: document.getElementById("car-availability").checked,
-        imageUrl: document.getElementById("car-image-url").value || "/uploads/cars/default.jpg",
+        imageUrl: document.getElementById("car-image-url").value || "/uploads/cars/default.jpg", // Dosya adı
         gearType: document.getElementById("car-gear-type").value,
         fuelType: document.getElementById("car-fuel-type").value,
         kilometer: parseInt(document.getElementById("car-kilometer").value) || 0,
@@ -36,7 +54,6 @@ async function addNewCar() {
     };
 
     try {
-        // URL parametrelerini düzgün biçimlendir
         const queryParams = new URLSearchParams({
             brand: carDetails.brand,
             model: carDetails.model,
@@ -48,11 +65,9 @@ async function addNewCar() {
             dailyPrice: carDetails.dailyPrice
         });
 
-        // Aynı araç olup olmadığını kontrol et
         const duplicateCheckResponse = await apiFetch(`/api/admin/cars/check-duplicate?${queryParams.toString()}`, 'GET');
 
         if (duplicateCheckResponse) {
-            // Aynı araç varsa kullanıcıdan onay al
             const confirmUpdate = window.confirm("Aynı özelliklere sahip bir araç zaten mevcut. Sayısını artırmak ister misiniz?");
             if (confirmUpdate) {
                 await apiFetch(`/api/admin/cars?confirmUpdate=true`, 'POST', carDetails);
@@ -61,20 +76,18 @@ async function addNewCar() {
                 alert("İşlem iptal edildi.");
             }
         } else {
-            // Aynı araç yoksa yeni kayıt oluştur
             await apiFetch(`/api/admin/cars`, 'POST', carDetails);
             alert("Yeni araç başarıyla eklendi!");
         }
 
-        // Modal kapat ve araçları yeniden yükle
         closeAddCarModal();
-        await loadAllCars(); // Tüm araçları yükle
-        addUpdateCarButtonListeners(); // Update butonları için event listener ekle
+        await loadAllCars();
     } catch (error) {
         console.error("Error adding car:", error);
         alert("Araç eklenirken bir hata oluştu. Lütfen tekrar deneyin.");
     }
 }
+
 
 
 
@@ -375,7 +388,23 @@ async function showUpdateCarModal(carId) {
     }
 }
 
-
+document.addEventListener("DOMContentLoaded", function () {
+    const updateFilePathInput = document.getElementById("update-filePath");
+    if (updateFilePathInput) {
+        updateFilePathInput.addEventListener("change", function (event) {
+            const fullPath = event.target.value; // Tam dosya yolu
+            const fileName = fullPath.split("\\").pop(); // Sadece dosya adını al
+            const imageUrlInput = document.getElementById("update-car-image-url");
+            if (imageUrlInput) {
+                imageUrlInput.value = fileName; // Görsel URL alanını doldur
+            } else {
+                console.error("Element with ID 'update-car-image-url' not found");
+            }
+        });
+    } else {
+        console.error("Element with ID 'update-filePath' not found");
+    }
+});
 
 async function updateCar() {
     const carId = document.getElementById("update-car-id").value;
@@ -387,42 +416,25 @@ async function updateCar() {
         dailyPrice: parseFloat(document.getElementById("update-car-daily-price").value),
         availableCount: parseInt(document.getElementById("update-car-available-count").value),
         available: document.getElementById("update-car-availability").checked,
-        kilometer: parseInt(document.getElementById("update-car-kilometer").value) || 0, // Kilometre verisini al
+        kilometer: parseInt(document.getElementById("update-car-kilometer").value) || 0,
         gearType: document.getElementById("update-car-gear-type").value,
         fuelType: document.getElementById("update-car-fuel-type").value,
-        location: document.getElementById("update-car-location").value
+        location: document.getElementById("update-car-location").value,
+        imageUrl: document.getElementById("update-car-image-url").value || "/uploads/cars/default.jpg"
     };
 
-   try {
-           console.log("Gönderilen Güncelleme Verileri:", carDetails);
-
-           // Duplicate kontrolü için sorgu dizesi (query string) oluştur
-           const queryParams = new URLSearchParams({
-               brand: carDetails.brand,
-               model: carDetails.model,
-               year: carDetails.year,
-               color: carDetails.color,
-               gearType: carDetails.gearType,
-               fuelType: carDetails.fuelType,
-               location: carDetails.location,
-               dailyPrice: carDetails.dailyPrice
-           });
-
-           const duplicateResponse = await apiFetch(`/api/admin/cars/check-duplicate?${queryParams.toString()}`, "GET");
-           if (duplicateResponse) {
-               const confirmUpdate = window.confirm("Bilgilerle eşleşen araç bulundu. Sayısını artırmak ister misiniz?");
-               if (!confirmUpdate) return;
-           }
-
-            await apiFetch(`/api/admin/cars/${carId}`, "PUT", carDetails);
-            alert("Araç başarıyla güncellendi!");
-            closeUpdateCarModal();
-            await loadAllCars();
-        } catch (error) {
-            console.error("Error updating car:", error);
-            alert("Araç güncellenemedi. Lütfen tekrar deneyin.");
-        }
+    try {
+        console.log("Gönderilen Güncelleme Verileri:", carDetails);
+        await apiFetch(`/api/admin/cars/${carId}`, "PUT", carDetails);
+        alert("Araç başarıyla güncellendi!");
+        closeUpdateCarModal();
+        await loadAllCars(); // Tüm araçları yeniden yükle
+    } catch (error) {
+        console.error("Error updating car:", error);
+        alert("Araç güncellenemedi. Lütfen tekrar deneyin.");
     }
+}
+
 
 
 function closeUpdateCarModal() {

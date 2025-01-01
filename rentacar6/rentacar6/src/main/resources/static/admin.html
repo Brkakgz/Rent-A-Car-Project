@@ -52,8 +52,15 @@
         <input type="number" id="car-available-count" />
         <label for="car-availability">Available:</label>
         <input type="checkbox" id="car-availability" />
+
+        <!-- Dosya seçme alanı -->
+        <label for="filePath">Choose Car Image:</label>
+        <input type="file" id="filePath" />
+
+        <!-- Görüntü URL'si -->
         <label for="car-image-url">Image URL:</label>
         <input type="text" id="car-image-url" />
+
         <label for="car-gear-type">Gear Type:</label>
         <select id="car-gear-type"></select>
         <label for="car-fuel-type">Fuel Type:</label>
@@ -64,6 +71,7 @@
         <button id="add-car-cancel" class="btn">Cancel</button>
     </div>
 </div>
+
 
 <!-- Araç güncelleme modal -->
 <div id="update-car-modal" class="modal" style="display: none;">
@@ -82,6 +90,12 @@
         <input type="number" id="update-car-daily-price">
         <label for="update-car-available-count">Available Count:</label>
         <input type="number" id="update-car-available-count">
+        <label for="update-filePath">Choose Car Image:</label>
+        <input type="file" id="update-filePath" />
+
+        <label for="update-car-image-url">Image URL:</label>
+        <input type="text" id="update-car-image-url" />
+
         <label for="update-car-availability">Available:</label>
         <input type="checkbox" id="update-car-availability">
         <label for="update-car-kilometer">Mileage (km):</label>

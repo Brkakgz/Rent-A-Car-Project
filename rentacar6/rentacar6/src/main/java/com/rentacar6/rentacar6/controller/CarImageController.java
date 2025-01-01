@@ -51,4 +51,13 @@ public class CarImageController {
                     .body("Failed to delete image: " + e.getMessage());
         }
     }
+
+    @PostMapping("/save-file-path")
+    public ResponseEntity<String> saveFilePath(@RequestParam("filePath") String filePath) {
+        // Dosya yolunu alıp işleyin
+        String fullPath = "/uploads/cars/" + Paths.get(filePath).getFileName().toString();
+        // Burada veritabanına kaydetme işlemini yapabilirsiniz (isteğe bağlı)
+        return ResponseEntity.ok("Dosya yolu başarıyla kaydedildi: " + fullPath);
+    }
+
 }

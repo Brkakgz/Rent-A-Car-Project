@@ -195,4 +195,10 @@ public class CarService {
         return carRepository.save(car);
     }
 
+
+
+        public List<Car> getCarsByLocation(LocationType locationType) {
+            return carRepository.findByLocation(locationType);
+        }
+
 }

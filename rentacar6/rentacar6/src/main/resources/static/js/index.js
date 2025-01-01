@@ -119,23 +119,29 @@ function attachFormSubmissionListener() {
 
 // Araçları yükleme
 async function loadCars() {
-    const carList = document.getElementById("car-list");
+    const carsContainer = document.getElementById("cars-container");
+
+    if (!carsContainer) {
+        console.error("Cars container element not found in DOM.");
+        return; // Eğer eleman bulunamazsa işlemi sonlandır
+    }
 
     try {
         const cars = await apiFetch('/api/cars/allCars', 'GET');
 
-        if (cars.length === 0) {
-            carList.innerHTML = '<p>No cars available at the moment.</p>';
+        if (!cars || cars.length === 0) {
+            carsContainer.innerHTML = '<p>No cars available at the moment.</p>';
             return;
         }
 
-        carList.innerHTML = cars.map(car => createCarCard(car)).join('');
+        carsContainer.innerHTML = cars.map(car => createCarCard(car)).join('');
         attachRentButtons(); // Butonlara olay dinleyicileri ekle
     } catch (error) {
         console.error("Error loading cars:", error);
-        carList.innerHTML = '<p class="error-message">Error loading cars. Please try again.</p>';
+        carsContainer.innerHTML = '<p class="error-message">Error loading cars. Please try again.</p>';
     }
 }
+
 
 
 
@@ -178,19 +184,25 @@ function attachRentButtons() {
 document.getElementById("apply-filters-button").addEventListener("click", applyFilters);
 
 async function applyFilters() {
-    const carList = document.getElementById('car-list');
+    const carsContainer = document.getElementById('cars-container'); // ID'yi kontrol edin
 
-    const brand = document.getElementById('brand').value || '';
-    const model = document.getElementById('model').value || '';
-    const color = document.getElementById('color').value || '';
-    const minPrice = document.getElementById('minPrice').value || '';
-    const maxPrice = document.getElementById('maxPrice').value || '';
-    const year = document.getElementById('year').value || '';
-    const gearType = document.getElementById('gearType') ? document.getElementById('gearType').value : '';
-    const fuelType = document.getElementById('fuelType') ? document.getElementById('fuelType').value : '';
-    const location = document.getElementById('location') ? document.getElementById('location').value : '';
-    const minKilometers = document.getElementById('minKilometers').value || '';
-    const maxKilometers = document.getElementById('maxKilometers').value || '';
+    if (!carsContainer) {
+        console.error("Cars container not found in DOM."); // Eğer element bulunamazsa hata
+        return;
+    }
+
+    // Filtreleme için değerleri al
+    const brand = document.getElementById('brand')?.value || '';
+    const model = document.getElementById('model')?.value || '';
+    const color = document.getElementById('color')?.value || '';
+    const minPrice = document.getElementById('minPrice')?.value || '';
+    const maxPrice = document.getElementById('maxPrice')?.value || '';
+    const year = document.getElementById('year')?.value || '';
+    const gearType = document.getElementById('gearType')?.value || '';
+    const fuelType = document.getElementById('fuelType')?.value || '';
+    const location = document.getElementById('location')?.value || '';
+    const minKilometers = document.getElementById('minKilometers')?.value || '';
+    const maxKilometers = document.getElementById('maxKilometers')?.value || '';
 
     const queryParams = new URLSearchParams({
         brand,
@@ -209,20 +221,21 @@ async function applyFilters() {
     try {
         const cars = await apiFetch(`/api/cars/filteredCars?${queryParams}`, 'GET');
 
-        carList.innerHTML = '';
+        carsContainer.innerHTML = ''; // Mevcut içeriği temizle
 
-        if (cars.length === 0) {
-            carList.innerHTML = '<p>No cars match your filters.</p>';
+        if (!cars || cars.length === 0) {
+            carsContainer.innerHTML = '<p>No cars match your filters.</p>'; // Filtre sonucu yoksa
             return;
         }
 
-        carList.innerHTML = cars.map(car => createCarCard(car)).join('');
-        attachRentButtons(); // Butonlara olay dinleyicileri ekle
+        carsContainer.innerHTML = cars.map(car => createCarCard(car)).join('');
+         attachRentButtons(); // Rent now butonlarına dinleyici ekleniyor
     } catch (error) {
         console.error("Error applying filters:", error);
-        carList.innerHTML = '<p class="error-message">Failed to apply filters. Please try again.</p>';
+        carsContainer.innerHTML = '<p class="error-message">Failed to apply filters. Please try again.</p>';
     }
 }
+
 
 
 
@@ -342,22 +355,89 @@ function createCarCard(car) {
                 <p class="car-details"><strong>Color:</strong> ${car.color}</p>
                 <p class="car-details"><strong>Fuel:</strong> ${car.fuelType}</p>
                 <p class="car-details"><strong>Gear:</strong> ${car.gearType}</p>
-                <p class="car-km"><strong>Mileage:</strong> ${car.kilometer} km</p>
+                <p class="car-km"><strong>Mileage:</strong> ${car.kilometer || 0} km</p>
                 <p class="car-location"><strong>Location:</strong> ${car.location}</p>
-                <p class="car-price"><strong>Price Per Day:</strong> $${car.dailyPrice}</p>
+                <p class="car-price"><strong>Price Per Day:</strong> $${car.dailyPrice.toFixed(2)}</p>
                 <p class="car-availability"><strong>Available Cars:</strong> ${car.availableCount}</p>
                 <button class="btn ${buttonClass}" data-id="${car.id}">${buttonText}</button>
             </div>
         </div>
-
     `;
 }
+
+
+//ŞehirBazlıAnasayfa
+
+//ŞehirKartları
+document.addEventListener("DOMContentLoaded", async () => {
+    const citiesContainer = document.getElementById("cities-container");
+
+    if (!citiesContainer) {
+        console.error("Cities container not found in DOM.");
+        return; // Eğer eleman bulunamazsa işlemi sonlandır
+    }
+
+    try {
+        const cities = await apiFetch('/api/cars/locations', 'GET');
+
+        if (!cities || cities.length === 0) {
+            citiesContainer.innerHTML = '<p>No cities available.</p>';
+            return;
+        }
+
+        citiesContainer.innerHTML = cities.map(city => `
+            <button class="city-card" data-city="${city}">
+                <h3>${city}</h3>
+            </button>
+        `).join('');
+
+        // Şehir kartlarına tıklama olayı ekle
+        document.querySelectorAll(".city-card").forEach(card => {
+            card.addEventListener("click", async () => {
+                const city = card.dataset.city;
+                await loadCarsByCity(city);
+            });
+        });
+    } catch (error) {
+        console.error("Error loading cities:", error);
+        citiesContainer.innerHTML = '<p>Error loading cities. Please try again later.</p>';
+    }
+});
+
+
+
+
+//ŞehirBazlı araç yükleme:
+async function loadCarsByCity(city) {
+    const carsContainer = document.getElementById("cars-container"); // ID'nin var olduğundan emin olun
+
+    if (!carsContainer) {
+        console.error("Cars container element not found in DOM.");
+        return;
+    }
+
+    try {
+        const cars = await apiFetch(`/api/cars/by-location?location=${city}`, 'GET');
+
+        if (!cars || cars.length === 0) {
+            carsContainer.innerHTML = `<p>No cars available in ${city}.</p>`;
+            return;
+        }
+
+        carsContainer.innerHTML = cars.map(car => createCarCard(car)).join('');
+        attachRentButtons(); // Rent now butonlarına dinleyici ekleniyor
+    } catch (error) {
+        console.error("Error loading cars for city:", error);
+        carsContainer.innerHTML = `<p>Error loading cars for ${city}. Please try again later.</p>`;
+    }
+}
+
 
 
 // Sayfa yüklendiğinde dropdownları doldur
 document.addEventListener("DOMContentLoaded", async () => {
     await loadDropdowns(); // Dropdownları dinamik olarak doldur
-    loadCars(); // Araçları yükle
+    await loadCars(); // Araçları yükle
 });
 
 

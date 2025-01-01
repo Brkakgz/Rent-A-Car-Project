@@ -140,6 +140,34 @@ public class CarController {
         return ResponseEntity.ok(locations);
     }
 
+    @GetMapping("/by-location")
+    public ResponseEntity<List<CarDTO>> getCarsByLocation(@RequestParam String location) {
+        try {
+            LocationType locationType = LocationType.valueOf(location.toUpperCase());
+            List<CarDTO> cars = carService.getCarsByLocation(locationType).stream()
+                    .map(car -> new CarDTO(
+                            car.getId(),
+                            car.getBrand(),
+                            car.getModel(),
+                            car.getYear(),
+                            car.getColor(),
+                            car.getGearType().toString(),
+                            car.getFuelType().toString(),
+                            car.getKilometer(),
+                            car.getDailyPrice(),
+                            car.isAvailable(),
+                            car.getLocation().toString(),
+                            car.getImageUrl(),
+                            car.getAvailableCount()
+                    ))
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(cars);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+
     @GetMapping("/gear-types")
     public ResponseEntity<List<String>> getGearTypes() {
         List<String> gearTypes = Arrays.stream(GearType.values())
