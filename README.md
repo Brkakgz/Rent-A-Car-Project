@@ -37,7 +37,6 @@
 **Dinamik Fiyat Hesaplama**: Kullanıcı tarih seçimine göre toplam kiralama maliyetini anında görebilir.  
 **Responsive Tasarım**: Tüm sayfalar farklı cihazlarda sorunsuz çalışacak şekilde tasarlanmıştır.  
 **Rol Tabanlı Yetkilendirme**: Kullanıcı ve admin rolleri arasında ayrım yapılır. Adminler geniş yetkilere sahiptir.  
-**Kolay Entegrasyon**: Projeyi Docker ile kolayca başlatabilir, modern yazılım geliştirme süreçlerine entegre edebilirsiniz.  
 
 ## Nasıl Çalışır?
 ### Kullanıcılar İçin
