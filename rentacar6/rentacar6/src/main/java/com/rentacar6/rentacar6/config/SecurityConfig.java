@@ -95,6 +95,7 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api/auth/**").permitAll()
                         // Araç GET işlemleri herkese açık
                         .requestMatchers(HttpMethod.GET, "/api/cars/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         // Sipariş işlemleri sadece USER erişimine açık
                         .requestMatchers("/api/orders/**").hasRole("USER")
                         // Admin işlemleri sadece ADMIN erişimine açık

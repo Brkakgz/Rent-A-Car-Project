@@ -70,7 +70,7 @@ public class DataLoader implements CommandLineRunner {
         customer.setFirstName("John");
         customer.setLastName("Doe");
         customer.setEmail(userUniqueEmail);
-        customer.setPhone("987654321");
+        customer.setPhone("9876543219");
         customer.setTcNo(userUniqueTcNo);
         customer.setAddress("456 Customer St");
         customer.setPassword(passwordEncoder.encode("user123"));
