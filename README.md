@@ -5,14 +5,16 @@
 
 ## Kullanıcı İşlevleri
 **Giriş ve Kayıt**: Kullanıcılar, sisteme kayıt olarak giriş yapabilir. JWT sistemi sayesinde güvenli oturumlar sağlanır.  
-**Araç Listeleme**: Araçları markasına, rengine ve günlük fiyatına göre filtreleyebilirsiniz.  
+**Araç Listeleme**: Araçları marka, model gibi özelliklerine göre filtreleyebilirsiniz.  
 **Araç Kiralama**: Tarih aralığı seçerek, toplam fiyat bilgisiyle birlikte istediğiniz aracı kiralayabilirsiniz. Kiralama sonrası araç stoktan düşer.  
 **Sipariş Geçmişi**: Daha önce kiraladığınız araçların detaylarını bir sayfa üzerinden görebilirsiniz.  
-**Otomatik Stok Yönetimi**: Stok 0 olduğunda araç listeden kaldırılır, stok arttığında tekrar görüntülenebilir hale gelir.  
+**Otomatik Stok Yönetimi**: Stok 0 olduğunda araç listeden kaldırılır, stok arttığında tekrar görüntülenebilir hale gelir. 
+**Şehir Bazlı Kiralama**: Araçları şehir bazında kiralayıp kiraladığınız aracı farklı şehirlerde teslim edebilirsiniz. 
 ## Admin İşlevleri
 **Araç Yönetimi**: Yeni araç ekleyebilir, mevcut araçları güncelleyebilir veya silebilirsiniz. Araçların özelliklerini (görünürlük, renk, fiyat vb.) düzenleyebilirsiniz.  
 **Kiralama Geçmişi Görüntüleme**: Bütün kullanıcıların kiralama geçmişine erişerek detaylı inceleme yapabilirsiniz.  
-**Araç Teslim Alma İşlemi**: Kullanıcıdan teslim alınan araçların stoğu otomatik güncellenir. Eğer araç pasif durumda ise, teslim alındıktan sonra tekrar görünür hale gelir.  
+**Araç Teslim Alma İşlemi**: Kullanıcıdan teslim alınan araçların stoğu otomatik güncellenir. Eğer araç pasif durumda ise, teslim alındıktan sonra tekrar görünür hale gelir. Kullanıcının teslim ettiği şehirde araç stoğu otomatik olarak artar. Daha önce araç orada yoksa otomatik olarak stoklara eklenir. 
+
 
 ## Teknolojiler
 ### Backend
