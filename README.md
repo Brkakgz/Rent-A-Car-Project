@@ -18,7 +18,11 @@
 
 ## Teknolojiler
 ### Backend
-*Java (Spring Boot)*  
+*Java*  
+*Spring Framework*  
+*Hibernate*  
+*JSON*  
+*DTO*  
 *Java8*  
 *OOP*  
 *Maven*  
