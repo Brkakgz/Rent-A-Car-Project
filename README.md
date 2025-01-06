@@ -11,7 +11,7 @@
 **Otomatik Stok Yönetimi**: Stok 0 olduğunda araç listeden kaldırılır, stok arttığında tekrar görüntülenebilir hale gelir. 
 **Şehir Bazlı Kiralama**: Araçları şehir bazında kiralayıp kiraladığınız aracı farklı şehirlerde teslim edebilirsiniz. 
 ## Admin İşlevleri
-**Araç Yönetimi**: Yeni araç ekleyebilir, mevcut araçları güncelleyebilir veya silebilirsiniz. Araçların özelliklerini (görünürlük, renk, fiyat vb.) düzenleyebilirsiniz.  
+**Araç Yönetimi**: Yeni araç ekleyebilir, mevcut araçları güncelleyebilir veya aktifliğini değiştirebilirsiniz. Araçların özelliklerini (görünürlük, renk, fiyat vb.) düzenleyebilirsiniz.  
 **Kiralama Geçmişi Görüntüleme**: Bütün kullanıcıların kiralama geçmişine erişerek detaylı inceleme yapabilirsiniz.  
 **Araç Teslim Alma İşlemi**: Kullanıcıdan teslim alınan araçların stoğu otomatik güncellenir. Eğer araç pasif durumda ise, teslim alındıktan sonra tekrar görünür hale gelir. Kullanıcının teslim ettiği şehirde araç stoğu otomatik olarak artar. Daha önce araç orada yoksa otomatik olarak stoklara eklenir. 
 
@@ -47,6 +47,36 @@ Araçları detaylı bir şekilde inceleyip uygun tarih aralığında kiralama i�
 ### Adminler İçin
 Araçlar ve kullanıcılar üzerinde tam kontrole sahiptir.
 Araç ekleme, düzenleme ve teslim işlemleri gibi yönetimsel işlemleri gerçekleştirebilir.
+
+##Görseller
+
+**Anasayfa**
+![HomePage](https://github.com/user-attachments/assets/697225d0-76f8-49c2-934f-901ea752718a)
+
+**Şehirlere Göre Arama**
+![HomePageCity](https://github.com/user-attachments/assets/a1e120d6-9f10-408e-9396-79c33ac0429d)
+
+**Filtreleme**
+![HomePageFilter](https://github.com/user-attachments/assets/d1ba2c09-35e7-4133-afb9-10ecbb6a3fbd)
+
+**Kullanıcı Girişi**
+![LoginPageUserLogin](https://github.com/user-attachments/assets/c45f3b69-4b2f-4982-bd2f-5fbab75db67c)
+
+**Kullanıcı Kayıt Sayfası**
+![RegisterPage](https://github.com/user-attachments/assets/ed703a48-af33-41be-bfc7-d319be2d0c83)
+
+**Kullanıcı Profil Sayfası**
+![ProfilePage](https://github.com/user-attachments/assets/f5934276-48e0-4543-9d5d-1c575eb77811)
+
+**Admin Paneli Kiralanmış Araçlar ve Teslim Alma**
+![AdminPanelRentedCars](https://github.com/user-attachments/assets/27738c3f-1676-4a39-a232-21fd704333e2)
+
+**Admin Paneli Kiralanma Geçmişi**
+![AdminPanelRentalHistory](https://github.com/user-attachments/assets/e54866da-42f5-47cc-9d11-084399f59895)
+
+**Admin Paneli Araç Yönetimi**
+![AdminPanelAllCars](https://github.com/user-attachments/assets/81acf41d-3947-4e2b-9b70-8e365e8281b2)
+
 
 
 
